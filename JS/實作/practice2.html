@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<head>
+    <title>第二題【操作DOM物件】</title>
+    <link rel="stylesheet" href="practice2.css">
+    <script>
+        window.onload = function () {
+            document.getElementById('btnAdd').onclick = addRow;
+            document.getElementById('btnAlter').onclick = alterRow;
+            document.getElementById('btnClear').onclick = clearTable;
+        };
+
+        function addRow() {
+            const table = document.getElementById('resultTab');
+            const manufacturer = document.getElementById('manufacturer').value;
+            const type = document.getElementById('type').value;
+            const minPrice = document.getElementById('minPrice').value;
+            const price = document.getElementById('price').value;
+
+            let missingField = [];
+            // 提示視窗
+            if (!manufacturer) {
+                missingField.push('製造商');
+            }
+            if (!type) {
+                missingField.push('類型');
+            }
+            if (missingField.length > 0) {
+                alert('『' + missingField.join(' , ') + '』不可為空');
+            } else {
+                document.getElementById('manufacturer').value = '';
+                document.getElementById('type').value = '';;
+                document.getElementById('minPrice').value = '';
+                document.getElementById('price').value = '';
+                const tr = table.insertRow();
+                const rowData = [
+                    table.rows.length - 1, // 不包含表頭
+                    manufacturer, type, minPrice, price
+                ]
+                let td0 = tr.insertCell(0);
+                td0.className = 'label-small';
+                const label = document.createElement('label');
+                const selRadio = document.createElement('input');
+                selRadio.type = 'radio';
+                selRadio.name = 'sel' // 避免多選
+                selRadio.addEventListener('click', function () {
+                    selRow(this);
+                });
+                label.appendChild(selRadio);
+                td0.appendChild(label);
+
+                for (let i = 1; i < rowData.length + 1; i++) {
+                    let td = tr.insertCell(i);
+                    td.innerHTML = rowData[i - 1];
+                    td.className = 'label-mid';
+                }
+                let td6 = tr.insertCell(6);
+                td6.className = 'label-large';
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'button';
+                deleteButton.textContent = '刪除';
+                deleteButton.addEventListener('click', function () {
+                    deleteRow(this);
+                });
+                td6.appendChild(deleteButton);
+            }
+        };
+
+        function selRow(radio) {
+            const row = radio.closest('tr');
+            const cells = row.getElementsByTagName('td');
+            document.getElementById('manufacturer').value = cells[2].textContent;
+            document.getElementById('type').value = cells[3].textContent;
+            document.getElementById('minPrice').value = cells[4].textContent;
+            document.getElementById('price').value = cells[5].textContent;
+        };
+
+        function deleteRow(button) {
+            const table = document.getElementById('resultTab');
+
+            // const rowIndex = button.parentNode.parentNode.rowIndex;
+            const rowIndex = button.closest('tr').rowIndex;
+            table.deleteRow(rowIndex);
+
+            // refresh序號
+            for (let i = 1; i < table.rows.length; i++) {
+                table.rows[i].cells[1].textContent = i;
+            }
+        }
+
+        //修改
+        function alterRow() {
+            const manufacturer = document.getElementById('manufacturer').value;
+            const type = document.getElementById('type').value;
+            let missingField = [];
+            let radio = document.getElementsByName('sel');
+            // 提示視窗
+            if (!isRadioSelected()) {
+                alert('沒有點選 radio')
+            }
+            else {
+                if (!manufacturer) {
+                    missingField.push('製造商');
+                }
+                if (!type) {
+                    missingField.push('類型');
+                }
+                if (missingField.length > 0) {
+                    alert('『' + missingField.join(' , ') + '』不可為空');
+                } else {
+                    const table = document.getElementById('resultTab');
+                    let index = isRadioSelected();
+                    table.rows[index].cells[2].textContent = document.getElementById('manufacturer').value;
+                    table.rows[index].cells[3].textContent = document.getElementById('type').value;
+                    table.rows[index].cells[4].textContent = document.getElementById('minPrice').value;
+                    table.rows[index].cells[5].textContent = document.getElementById('price').value;
+
+
+                }
+            }
+        };
+
+        function isRadioSelected() {
+            let radioButtons = document.getElementsByName('sel');
+
+            for (let i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].checked) {
+                    return radioButtons[i].closest('tr').rowIndex;
+                }
+            }
+
+            return null;
+        }
+        //清空
+        function clearTable() {
+            const rows = document.querySelectorAll('#resultTab tr:not(:first-child)');
+            rows.forEach(row => row.remove());
+            document.getElementById('manufacturer').value = '';
+            document.getElementById('type').value = '';;
+            document.getElementById('minPrice').value = '';
+            document.getElementById('price').value = '';
+        };
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td class="label-cell"><span>製造商</span></td>
+            <td class="input-cell"><input type="text" id="manufacturer"></td>
+            <td class="label-cell"><span>類型</span></td>
+            <td class="input-cell"><input type="text" id="type"></td>
+        </tr>
+        <tr>
+            <td class="label-cell"><span>底價</span></td>
+            <td class="input-cell"><input type="text" id="minPrice"></td>
+            <td class="label-cell"><span>售價</span></td>
+            <td class="input-cell"><input type="text" id="price"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center;vertical-align: middle;">
+                <button type="button" id="btnAdd">新增</button>
+                <button type="button" id="btnAlter">修改</button>
+                <button type="button" id="btnClear">清空</button>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table id="resultTab">
+        <tr>
+            <th class="label-small"></th>
+            <th class="label-mid"><span>序號</span></th>
+            <th class="label-mid"><span>製造商</span></th>
+            <th class="label-mid"><span>類型</span></th>
+            <th class="label-mid"><span>底價</span></th>
+            <th class="label-mid"><span>售價</span></th>
+            <th class="label-large"></th>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+#photo{ /* 固定圖片大小 */
+    width:150px;
+    height:200px;
+}
+
+div { /* 黃底  寬度是父元素寬度的30% */
+    width: 45%;
+    background-color:gold;
+}
+
+.first { /* 粉紅底 */
+    background-color:rgb(255, 127, 127);
+}
+
+.center { /* 元件置中 */
+    /* display: block;: 將元素轉變為塊級元素，允許使用 margin 進行水平置中。
+    margin: auto;: 自動計算左右邊距，將元素水平置中。*/
+    display: block;
+    margin:auto;
+}
+
+.textcenter{
+    text-align: center;
+}
+

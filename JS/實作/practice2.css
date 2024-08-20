@@ -1,0 +1,47 @@
+.label-cell {
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+.input-cell {
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+.label-small {
+    width: 70px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+.label-mid {
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+.label-large {
+    width: 120px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+tr {
+    height: 50px;
+}
+
+input {
+    width: 80%;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

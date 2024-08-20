@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>	
+<script>
+
+    window.onload = function(){
+    
+		const print = function(times, label){
+			let html = '';
+			for(let i=0; i<times; i++){
+				html += label;
+			}
+			return html;
+		};
+
+        document.getElementById('send').onclick = function(){
+		
+            const level = document.getElementById('level').value * 1;
+            if(!level || level<3 || level>25){
+				document.getElementById('err').hidden = false;
+				document.getElementById('tree').innerHTML = '';
+                return;
+            }
+						
+			const first = print(level-1, '　') + '＊<br>';
+			
+			let result = first;
+            for(let i=2; i<=level; i++){
+				result += print(level-i, '　');
+				result += print((i-1)*2+1, '＊');
+				result += '<br>';
+			}
+			result += print(Math.floor(level/2) + 1, first);
+			
+			document.getElementById('err').hidden = true;
+			document.getElementById('tree').innerHTML = result;           
+        };
+    };
+	
+</script>
+<body>
+    <span>想要畫出幾層的樹呢？（限定：3~25）</span><br>
+	<input type="text" id="level" /><button type="button" id="send">送出</button><br>
+	<span id="err" style="color:red" hidden>請輸入正確的數字</span><br>
+	<div id="tree"></div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>	
+<script>
+
+    window.onload = function(){
+
+		const quizJSON = '{"Q1":{"question":"新台幣兩百元鈔票上的人物是下列何者？","score":"15","answer":"蔣介石"},"Q2":{"question":"下列何者是「行動電話緊急救難專線」？","score":"10","answer":"112"},"Q3":{"question":"撲克牌中唯一沒有鬍子的老K是哪一張？","score":"30","answer":"紅心Ｋ"},"Q4":{"question":"請問胎兒在媽媽的肚子裡不會有以下哪種行為？","score":"25","answer":"放屁"},"Q5":{"question":"綠色細胞中的葉綠體存在細胞的何種構造中？","score":"20","answer":"細胞質"}}';
+		
+		
+		document.getElementById('send').onclick = function(){
+		
+			
+        };
+    };
+	
+</script>
+<body>
+	<table border="1">
+		<tr>
+			<td>題目</td>
+			<td>得分</td>
+		</tr>		
+		<tr>
+			<td>
+				<span>新台幣兩百元鈔票上的人物是下列何者？</span><br>
+				<input type="radio" name="Q1"/><span>孫中山</span><br>
+				<input type="radio" name="Q1"/><span>蔣介石</span><br>
+				<input type="radio" name="Q1"/><span>蔣經國</span><br>
+				<input type="radio" name="Q1"/><span>鄭成功</span><br>
+			</td>
+			<td id="Q1"></td>
+		</tr>
+		<tr>
+			<td>
+				<span>下列何者是「行動電話緊急救難專線」？</span><br>
+				<input type="radio" name="Q2"/><span>110</span><br>
+				<input type="radio" name="Q2"/><span>112</span><br>
+				<input type="radio" name="Q2"/><span>119</span><br>
+				<input type="radio" name="Q2"/><span>114</span><br>
+			</td>
+			<td id="Q2"></td>
+		</tr>
+		<tr>
+			<td>
+				<span>撲克牌中唯一沒有鬍子的老K是哪一張？</span><br>
+				<input type="radio" name="Q3"/><span>梅花Ｋ</span><br>
+				<input type="radio" name="Q3"/><span>方塊Ｋ</span><br>
+				<input type="radio" name="Q3"/><span>紅心Ｋ</span><br>
+				<input type="radio" name="Q3"/><span>黑桃Ｋ</span><br>
+			</td>
+			<td id="Q3"></td>
+		</tr>
+		<tr>
+			<td>
+				<span>請問胎兒在媽媽的肚子裡不會有以下哪種行為？</span><br>
+				<input type="radio" name="Q4"/><span>握拳</span><br>
+				<input type="radio" name="Q4"/><span>放屁</span><br>
+				<input type="radio" name="Q4"/><span>眨眼</span><br>
+				<input type="radio" name="Q4"/><span>打嗝</span><br>
+			</td>
+			<td id="Q4"></td>
+		</tr>
+		<tr>
+			<td>
+				<span>綠色細胞中的葉綠體存在細胞的何種構造中？</span><br>
+				<input type="radio" name="Q5"/><span>細胞膜</span><br>
+				<input type="radio" name="Q5"/><span>細胞核</span><br>
+				<input type="radio" name="Q5"/><span>細胞質</span><br>
+				<input type="radio" name="Q5"/><span>細胞壁</span><br>
+			</td>
+			<td id="Q5"></td>
+		</tr>
+	</table>
+	<button type="button" id="send">送出</button> 總分：<span id="total" style="color:red"></span><br>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>	
+<!--
+• DOM document：https://www.w3schools.com/jsref/dom_obj_document.asp
+• DOM element：https://www.w3schools.com/jsref/dom_obj_all.asp
+• DOM event：https://www.w3schools.com/jsref/dom_obj_event.asp	
+-->
+<!-- 依照以下指令進行 JS 程式撰寫
+• btn_1：將 id 為 test 的物件內容換成 "ABC"
+• btn_2：所有的 input 物件都要新加上一個屬性：style = "color:green;"
+• btn_3：所有名稱 (name) 為 cost 的物件，如果 value 屬性大於 1000 ，請將離他最近的上層 TR 物件加上一個屬性 style = "background-color:pink;"
+-->	
+<!-- <script type="text/javascript" src="jquery.js"></script> -->
+<script>
+
+    window.onload = function(){
+        // 按下btn_1
+        document.getElementById('btn_1').onclick = function(){
+            document.getElementById('test').innerHTML='ABC'
+        };
+
+        // 按下btn_2
+        document.getElementById('btn_2').onclick = function(){
+            const inputs= document.querySelectorAll('input');
+            for (let i of inputs){
+                i.style.color = 'green';
+                // i.setAttribute('style', 'color:green;');
+            }
+        };
+
+        //按下btn_3
+        document.getElementById('btn_3').onclick = function(){
+            const costs= document.getElementsByName('cost');
+            for (let i of costs){
+                if(i.value <= 1000){ // i.getAttribute('value')>1000
+            }
+            let trElement = i.closest('tr'); //找到最近的TR元素
+            // 也可用parentNode的方式找父節點
+            trElement.style.backgroundColor = 'pink';
+            };
+        };
+
+
+        
+    };
+	
+</script>
+<body>
+	<table>
+        <tr>
+            <td>Month</td>
+            <td>cost</td>
+            <td>income</td>
+        </tr>
+        <p id="MyId" class="memo" name="who">AAA</p>
+
+        <tr>
+            <td>Jan</td>
+            <td><input type="text" name="cost" value="500"></td>
+            <td><input type="text" name="income" value="4483"></td>
+        </tr>
+        <tr>
+            <td id="test">Feb</td>
+            <td><input type="text" name="cost" value="11980"></td>
+            <td><input type="text" name="income" value="5631"></td>
+        </tr>
+        <tr>
+            <td>Mar</td>
+            <td><input type="text" name="cost" value="5689"></td>
+            <td><input type="text" name="income" value="8902"></td>
+        </tr>
+        <tr>
+            <td><button id="btn_1">ABC</button></td>
+            <td><button id="btn_2">green</button></td>
+            <td><button id="btn_3">pink</button></td>  
+        </tr>
+    </table>
+</body>
+</html>

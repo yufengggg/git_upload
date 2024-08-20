@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>練習3</title>
+    <script>
+        var arr = [6, 5, '草莓大福', false, undefined, '抹茶拿鐵', [], function(){}, {}]
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i] instanceof Array){}
+            var type = typeof(arr[i]);
+            if(type=='object'){
+                
+                type = arr[i] instanceof Array? 'array':'object'
+            }
+            console.log(type);
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

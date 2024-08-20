@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <script type="text/javaScript">
+        const bigObj = {
+			firstName : 'Dark' 
+			, lastName : 'Liu' 
+			, sex: 'M' 
+			, weight: 80 
+			, married: true 
+			, workExp:[ { name:'cathay life insurence' , during: 8 } , { name:'cathay united bank' , during: 6} ] 
+			, skill : ['SQL','Java','JavaScript'] };
+
+        
+        
+                  
+            const printFunc = function(data) {            
+                // 請在此解析bigObj
+    // const indentation = '&nbsp;'.repeat(indent);
+
+    if (typeof data === 'object') {
+        if (data instanceof Array) {
+            document.write('(Array)[<br/>');
+        } else {
+            document.write('(Object){<br/>');
+        }
+        
+        for (let k in data) {
+            if (data[k] instanceof Array) {
+                document.write('&nbsp;' + k + '&nbsp;=&nbsp;' + '(' + 'Array' + ')&nbsp;[');
+                document.write('<br/>');
+                for (let i = 0; i < data[k].length; i++) {
+                    document.write('&nbsp;&nbsp;&nbsp;' + i + '&nbsp;=&nbsp;');
+                    printFunc(data[k][i]);  
+                }
+                document.write(']');
+                document.write('<br/>');
+            } else if (typeof data[k] === 'object') {
+                document.write('&nbsp;' + k + '&nbsp;=&nbsp;');
+                printFunc(data[k]);  
+            } else {
+                let type = typeof data[k];
+                document.write('&nbsp;' + k + '&nbsp;=&nbsp;' + '(' + type + ')&nbsp;' + data[k]);
+                document.write('<br/>');
+            }
+        }
+
+        if (data instanceof Array) {
+            document.write(']<br/>');
+        } else {
+            document.write('}<br/>');
+        }
+    } else {
+        document.write('(' + typeof data + ')&nbsp;' + data + '<br/>');
+    }
+};
+       
+        //此指令能輸出資訊到頁面上
+        document.writeln('<h1>Practice 5</h1>');
+        printFunc(bigObj);
+		
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

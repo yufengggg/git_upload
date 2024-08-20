@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="HashMap.js"></script>
+	<script type="text/javaScript">	
+
+		const map = new HashMap();    
+		map.put('key1','test1');
+		map.put('key2','test2');
+		
+		document.write('contains key1 : ' + map.contains('key1'));
+		document.write('<br/>');
+		document.write('get key1 : ' + map.get('key1'));
+		document.write('<br/>');
+		document.write('contains key4 : ' + map.contains('key4'));
+		document.write('<br/>');
+		const keys = map.keys();
+		const keyLength = keys.length;
+		document.write('keys length before clear : ' + keyLength);
+		document.write(' [ ');
+		for(let i=0; i<keys.length; i++){
+			document.write(keys[i] + '; ');
+		}
+		document.write(']');
+		map.clear();
+		document.write('<br/>');
+		document.write('keys length after clear : ' + map.keys().length);
+			
+	</script>
+</head>
+<body>    
+</body>
+</html>

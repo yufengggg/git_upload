@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>	
+<script>
+
+    window.onload = function(){
+    
+        const backJson = '{\"datas\":[{\"districts\":[{\"zip\":\"100\",\"name\":\"中正區\"},{\"zip\":\"103\",\"name\":\"大同區\"},{\"zip\":\"104\",\"name\":\"中山區\"},{\"zip\":\"105\",\"name\":\"松山區\"},{\"zip\":\"106\",\"name\":\"大安區\"},{\"zip\":\"108\",\"name\":\"萬華區\"},{\"zip\":\"110\",\"name\":\"信義區\"},{\"zip\":\"111\",\"name\":\"士林區\"},{\"zip\":\"112\",\"name\":\"北投區\"},{\"zip\":\"114\",\"name\":\"內湖區\"},{\"zip\":\"115\",\"name\":\"南港區\"},{\"zip\":\"116\",\"name\":\"文山區\"}],\"name\":\"臺北市\"},{\"districts\":[{\"zip\":\"200\",\"name\":\"仁愛區\"},{\"zip\":\"201\",\"name\":\"信義區\"},{\"zip\":\"202\",\"name\":\"中正區\"},{\"zip\":\"203\",\"name\":\"中山區\"},{\"zip\":\"204\",\"name\":\"安樂區\"},{\"zip\":\"205\",\"name\":\"暖暖區\"},{\"zip\":\"206\",\"name\":\"七堵區\"}],\"name\":\"基隆市\"}]}';
+
+        /*{datas:[{
+            name:'台北市',
+            districts: [
+                {zip:100, name:'中正區'}
+            ] 
+        }]}*/
+
+        const datas = JSON.parse(backJson).datas;
+
+        const createOption = function(show, value){
+            const opt = document.createElement('option');
+            opt.value = value;
+            opt.innerHTML = show;
+            return opt;
+        };
+
+        const cleanSelect = function(selectDom){
+            selectDom.innerHTML = '';
+            selectDom.appendChild(createOption('請選擇', ''));
+        };
+
+		let citySel = document.getElementById('city');
+		
+        // 想法一		
+        for(let data of datas){
+            const city = data.name;
+            citySel.appendChild(createOption(city, city));   
+        }        
+        citySel.onchange = function(){
+            let distSel = document.getElementById('dist');
+            cleanSelect(distSel);
+            let city = citySel.value;         
+            if(city){
+                distSel.disabled = false;     
+                for(let data of datas){
+                    if(city == data.name){
+                        let dists = data.districts;
+                        for(let dist of dists){
+                            distSel.appendChild(createOption(dist.name, dist.zip));
+                        }
+                        break;
+                    }
+                }                               
+            }else{
+                distSel.disabled = true;
+            }
+        };
+
+        // 想法二
+        /*const cityDistMapping = {}; //{'台北市':districts}
+        for(let data of datas){
+            const city = data.name;
+            citySel.appendChild(createOption(city, city));            
+            cityDistMapping[city] = data.districts;
+        }
+        
+        citySel.onchange = function(){
+            const distSel = document.getElementById('dist');
+            cleanSelect(distSel);
+            const city = citySel.value;         
+            if(city){
+                distSel.disabled = false;                
+                const dists = cityDistMapping[city];
+                for(let dist of dists){
+                    distSel.appendChild(createOption(dist.name, dist.zip));
+                }                
+            }else{
+                distSel.disabled = true;
+            }
+        }*/
+
+        // 想法三
+        /*const cityIndexMapping = {}; //{'台北市':0}
+        for(let i=0; i<datas.length;i++){
+            const city = datas[i].name;
+            citySel.appendChild(createOption(city, city));            
+            cityIndexMapping[city] = i;
+        }
+        
+        citySel.onchange = function(){
+            const distSel = document.getElementById('dist');
+            cleanSelect(distSel);
+            const city = citySel.value;         
+            if(city){
+                distSel.disabled = false;                
+                const dists = datas[cityIndexMapping[city]].districts;
+                for(let dist of dists){
+                    distSel.appendChild(createOption(dist.name, dist.zip));
+                }                
+            }else{
+                distSel.disabled = true;
+            }
+        }*/
+
+        document.getElementById('send').onclick = function(){
+            const dist = document.getElementById('dist').value;
+            if(!dist){
+                alert('請選擇行政區');
+                return;
+            }
+            alert(dist);
+            // alert(dist ? dist : '請選擇行政區');
+        };
+    };
+	
+</script>
+<body>
+    縣市：<select id="city"><option value="">請選擇</option></select><br>
+    行政區：<select id="dist" disabled><option value="">請選擇</option></select><br>
+    <button type="button" id="send">送出</button>
+</body>
+</html>

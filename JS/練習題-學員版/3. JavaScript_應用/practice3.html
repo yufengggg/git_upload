@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>practice3</title>
+    <script>
+        window.onload = function(){
+            document.getElementsByTagName('button')[0].onclick = function(){
+                const number = document.getElementsByTagName('input')[0].value;
+                if(isNaN(number)||number<3||number>25){
+                    const tagP = document.createElement('p');
+                    tagP.textContent = '請輸入正確的數字';
+                    tagP.style.color = 'red';
+                    document.body.appendChild(tagP);
+                    return;
+                }
+                
+                for(let n = 1; n <= number; n++){
+                    const tree = document.createElement('p');
+                    tree.textContent = '　'.repeat(number-n) + '＊'.repeat(2*n-1);
+                    document.body.appendChild(tree);
+                }
+                const layer = number/2 + 1;
+                for(let n =1; n <= layer;n++){
+                    const branch = document.createElement('p');
+                    branch.textContent = '　'.repeat(number-1) + '＊';
+                    document.body.appendChild(branch);
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <scan>想要畫出幾層的樹呢? (限定:3~25)</scan>
+    <br>
+    <input type="text">
+    <button type="button">送出</button>
+</body>
+</html>

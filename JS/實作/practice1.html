@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<head>
+    <title>第一題【模擬封裝與私有】</title>
+    <script src="HashMap.js"></script>
+    <script>
+        window.onload = function () {
+            const map = new HashMap();
+
+            // put按鈕
+            document.getElementById('put').onclick = function () {
+                const key = document.getElementById('key').value;
+                const value = document.getElementById('value').value;
+                if (!key) {
+                    alert('key值不可空白');
+                } else if (map.contains(key)) {
+                    alert('key值不得重覆')
+                }
+                else {
+                    map.put(key, value);
+                }
+
+                const keys = map.keys()
+                let result = '';
+                for (let k of keys) {
+                    returnValue = map.get(k);
+                    result += k + ':' + returnValue + '<br>';
+                }
+                document.getElementById('result').innerHTML = result;
+                document.getElementById('key').value = '';
+                document.getElementById('value').value = '';
+
+            }
+
+            // clear按鈕
+            document.getElementById('clear').onclick = function () {
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('key').value = '';
+                document.getElementById('value').value = '';
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td><span>KEY</span></td>
+            <td><input type="text" id="key"></td>
+        </tr>
+        <tr>
+            <td><span>VALUE</span></td>
+            <td><input type="text" id="value"></td>
+        </tr>
+    </table>
+    <!-- 向左對齊 -->
+    <hr style="width: 15%; margin-left: 0;">
+    <!-- 向下20px, 向右30px -->
+    <div>
+        <button type="button" style="position:relative;left:10px" id="put">PUT</button>
+        <button type="button" style="position:relative;left:40px" id="clear">CLEAR</button>
+    </div>
+    <hr style="width: 15%; margin-left: 0;">
+    <span>【RESULT】</span>
+    <div id="result" style="position:relative; top:10px;left:15px"></div>
+</body>
+
+</html>

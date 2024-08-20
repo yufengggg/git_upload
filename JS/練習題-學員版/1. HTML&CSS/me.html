@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<title>ME</title>
+
+	<script type="text/javascript">
+		window.onload = function () {
+			// 勾選其他要連動後面輸入框是否開放填寫
+			document.getElementById('other').onclick = function () {
+				const otherlang = document.getElementById('otherText');
+				otherlang.disabled = !document.getElementById('other').check;
+			};
+
+			document.getElementById('sayHi').onclick = function () {
+				const who = document.getElementById('name').value;
+				if (!who) {
+					alert('請填寫英文名');
+					return;
+				}
+				let people = document.getElementsByTagName('select')[0].options[document.getElementsByTagName('select')[0].selectedIndex].textContent;
+				if (people == '請選擇') {
+					people = '';
+				}
+				let radios = document.getElementsByName('ex')
+				let checkboxes = document.getElementsByName('lang');
+				let selectedText = '';
+				let selectedbox = [];
+
+				for (let radio of radios) {
+					if (radio.checked) {
+						const label = radio.parentElement;
+						selectedText = label.textContent;
+						break;
+					}
+				}
+				for (let box of checkboxes) {
+					if (box.checked) {
+						const labelbox = box.parentElement;
+						selectedbox.push(labelbox.textContent);
+					}
+				}
+				if (confirm('英文名: ' + document.getElementById('name').value + '\n'
+					+ '哪裡人: ' + people + '\n'
+					+ '正式工作經驗: ' + selectedText + '\n'
+					+ '語言: ' + selectedbox.join(' '))
+				) {
+					alert('Hi~' + document.getElementById('name').value);
+				}
+
+			};
+		};
+	</script>
+</head>
+
+<body>
+	<img src="huhCat.jpg" width="250" height="300">
+	<form method="get">
+		英文名: <input type="text" id="name" name="name"><br>
+		哪裡人: <select>
+			<option value="">請選擇</option>
+			<option value="001">台北市</option>
+			<option value="002">桃園市</option>
+			<option value="003">高雄市</option>
+		</select>
+		<br>
+		正式工作經驗:
+		<label><input type="radio" name="ex">有</label>
+		<label><input type="radio" name="ex">沒有</label>
+		<br>
+		語言:
+		<label><input type="checkbox" name="lang">國語</label>
+		<label><input type="checkbox" name="lang">台語</label>
+		<label><input id='other' type="checkbox" name="lang">其他<input id='otherText' type="text" disabled></label>
+		<br>
+		<table border="1">
+			<tr>
+				<td colspan="2">如果可以出國旅遊的話，想去~</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td><input type="text"></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td><input type="text"></td>
+			</tr>
+		</table>
+		<button type="button" id="sayHi">Say HI~</button>
+		</button>
+	</form>
+
+</body>
+
+</html>

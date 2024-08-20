@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>練習2-1</title>
+    <script>
+        var numarr= [1,5,29,41,37,15];
+        var obj={
+            name:'幸運兒',
+            age:20,
+            lottory:numarr
+        };
+        console.log(obj);
+        var origin={
+            王大明:89, 張小美:97, 李鐵柱:18, 謝小天:22
+        };
+        for(var student in origin){
+            var newscore = origin[student]+5;
+            if(newscore>100){
+                newscore = 100;
+            }
+            console.log(student+':'+ newscore);
+        }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

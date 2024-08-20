@@ -8,8 +8,22 @@
         th,
         td {
             border: 1px solid #333;
+            text-align: center;
         }
     </style>
+    <script src="psychometricTestObject.js">
+        window.onload = function(){
+            const table = document.getElementById('content');
+            const tr = table.insertRow();
+            const Q1data = psychometricTest.Q1;
+            
+            const length = Object.keys(Q1data).length;
+            for(let i = 0; i<length; i++){
+                let td = tr.insertCell(i);
+                
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -19,7 +33,14 @@
     <p>心理測驗來源： <a href="https://www.facebook.com/RDJIAHUEI/?locale=zh_TW">李佳蕙營養師</a></p>
     <br>
     <hr>
-    <table id="content"></table>
+    <table id="content">
+        <tr>
+            <th><span>題號</span></th>
+            <th><span>題目</span></th>
+            <th><span>選項</span></th>
+            <th></th>
+        </tr>
+    </table>
     <br>
     <div id="resultDiv"></div>
 

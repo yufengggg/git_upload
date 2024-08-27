@@ -44,7 +44,7 @@ const psychometricTest = {
     Q6: {
         question: '周末常以躺在沙發看電視度過？',
         ans: ['是', '否',],
-        next: ['Q09', 'Q11']
+        next: ['Q9', 'Q11']
     },
     Q7: {
         question: '一群人聚餐，總是由你決定餐廳？',

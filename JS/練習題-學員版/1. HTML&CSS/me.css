@@ -4,7 +4,7 @@
 }
 
 div { /* 黃底  寬度是父元素寬度的30% */
-    width: 45%;
+    width: 30%;
     background-color:gold;
 }
 

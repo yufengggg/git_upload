@@ -1,0 +1,143 @@
+body {
+    font-family: Arial;
+    background-color: #f0f4f8;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+h1 {
+    color: 	#0368B8;
+    font-size: 2em;
+}
+
+.form-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #555;
+}
+
+.mySelect {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: Arial;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.松山新店線 {
+    background-color: #018659;
+    color: white;
+}
+
+.文湖線 {
+    background-color: #C38C30;
+    color: white;
+}
+
+.環狀線 {
+    background-color: #FFDB00;
+    color: black;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+
+/* 转乘站点样式 */
+.blue {
+    font-weight: bold;      /* 加粗字体 */
+    font-size: 1.2em;       /* 增大字体 */
+    color: white;
+    background-color: #0368B8;
+    padding: 5px 8px;       /* 添加内边距 */
+    border-radius: 5px;     /* 圆角边框 */
+    border: 2px solid #086bbc; /* 边框颜色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+    display: inline-block;  /* 使元素成为块级元素以应用边框和背景 */
+}
+
+.blue::before {
+    content: "↔ ";          /* 添加换乘图标 */
+    font-size: 1.2em;       /* 图标大小 */
+    color:white;
+}
+
+/* 结果显示区域 */
+.resultDisplay {
+    margin-top: 50px;
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: none;  /* 初始状态隐藏 */
+}
+

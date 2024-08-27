@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<head>
+	<title>期中測驗_台北捷運票價計算</title>
+	<link rel="stylesheet" href="midterm.css">
+	<script type="text/javascript">
+		window.onload = function () {
+			// 共用API方法，請勿更動
+			var callApi = function callApi(url, param) {
+				return fetch(url, {
+					method: 'post',
+					body: JSON.stringify(param),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}).then(function (response) {
+					return response.json();
+				});
+			};
+
+			// button觸發查詢與在畫面顯示回傳值
+			document.getElementById('btnSubmit').addEventListener('click', function () {
+				// 請將查詢前要做的事情寫在下方
+				const startRoute = document.getElementById("startRoute").value;
+				const endRoute = document.getElementById("endRoute").value;
+				const startStation = document.getElementById("startStation").value;
+				const endStation = document.getElementById("endStation").value;
+				// 檢查是否有選擇路線
+				if (startRoute === "") {
+					alert("請選擇出發路線。");
+					return;
+				}
+				if (endRoute === "") {
+					alert("請選擇結束路線。");
+					return;
+				}
+
+				// 檢查是否有選擇起點站
+				if (startStation === "") {
+					alert("請選擇起點站。");
+					return;
+				}
+
+				// 檢查是否有選擇終點站
+				if (endStation === "") {
+					alert("請選擇終點站。");
+					return;
+				}
+
+				// 檢查是否起點站和終點站相同
+				if (startStation === endStation) {
+					alert("起點站和終點站不能相同。");
+					return;
+				}
+
+				// 請把要送至後端查詢的資訊，包裝成物件
+				var param = {
+					startRoute: startRoute,
+					endRoute: endRoute,
+					startStation: startStation,
+					endStation: endStation
+				};
+				callApi('http://localhost:8080/midterm/metro', param).then(function (response) {
+					const resultDisplay = document.getElementById('resultDisplay');
+
+					resultDisplay.innerHTML = '';
+
+					let stationsHtml = '';
+
+					// 如果是同一路线，直接使用一个颜色显示所有站点
+					if (response.sameRoute) {
+						stationsHtml += `<span>${response.stations}</span>`;
+					} else {
+						// 如果是不同路线，分别设置不同部分的颜色
+						if (response.preTransferStations) {
+							stationsHtml += `<span>${response.preTransferStations}</span>`;
+						}
+
+						if (response.firstTransferStation) {
+							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							stationsHtml += `<span class="blue">${response.firstTransferStation}</span>`;
+						}
+
+						if (response.midTransferStations) {
+							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							stationsHtml += `<span>${response.midTransferStations}</span>`;
+						}
+
+						if (response.secondTransferStation) {
+							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							stationsHtml += `<span class="blue">${response.secondTransferStation}</span>`;
+						}
+
+						if (response.postTransferStations) {
+							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							stationsHtml += `<span>${response.postTransferStations}</span>`;
+						}
+					}
+
+					// 显示合并后的所有站点
+					resultDisplay.innerHTML += `<p>經過站點：${stationsHtml}</p>`;
+
+					// 显示站点数量和车资
+					resultDisplay.innerHTML += `<p>共 ${response.stationCount} 站，車資 ${response.fare} 元</p>`;
+
+					// 显示结果区块
+					resultDisplay.style.display = 'block'
+
+
+				});
+			});
+			// 根据路线返回对应的颜色类
+			function getColorClass(route) {
+				switch (route) {
+					case '松山新店線':
+						return 'green';
+					case '文湖線':
+						return 'brown';
+					case '環狀線':
+						return 'yellow';
+					default:
+						return '';
+				}
+			}
+
+			document.getElementById('startRoute').onchange = function () {
+				updateStations('startRoute');
+			};
+
+			document.getElementById('endRoute').onchange = function () {
+				updateStations('endRoute');
+			};
+
+		}
+		// 動態更新下拉選單
+		function updateStations(routeId) {
+			const route = document.getElementById(routeId).value;
+			const startStation = document.getElementById("startStation");
+			const endStation = document.getElementById("endStation");
+
+			const stations = {
+				"松山新店線": ["新店", "新店區公所", "七張", "大坪林", "景美", "萬隆", "公館", "台電大樓", "古亭", "中正紀念堂", "小南門", "西門", "中山", "松江南京", "南京復興", "台北小巨蛋", "南京三民", "松山"],
+				"環狀線": ["大坪林", "十四張", "秀朗橋", "景平", "景安", "中和", "橋和", "中原", "板新", "板橋", "新埔民生", "頭前庄", "幸福", "新北產業園區"],
+				"文湖線": ["動物園", "木柵", "萬芳社區", "萬芳醫院", "辛亥", "麟光", "六張犁", "科技大樓", "大安", "忠孝復興", "南京復興", "中山國中", "松山機場", "大直", "劍南路", "西湖", "港墘", "文德", "內湖", "大湖公園", "葫洲", "東湖", "南港軟體園區", "南港展覽館"]
+			};
+
+			if (routeId === 'startRoute') {
+				// 更新起點站選單
+				startStation.disabled = false;
+				startStation.innerHTML = '<option value="">--請選擇起站--</option>';
+
+				if (stations[route]) {
+					stations[route].forEach(station => {
+						const option = document.createElement("option");
+						option.textContent = station;
+						option.value = station;
+						option.className = route;
+
+						startStation.appendChild(option);
+					});
+				}
+			} else if (routeId === 'endRoute') {
+				// 更新終點站選單
+				endStation.disabled = false;
+				endStation.innerHTML = '<option value="">--請選擇迄站--</option>';
+
+				if (stations[route]) {
+					stations[route].forEach(station => {
+						const option = document.createElement("option");
+						option.value = station;
+						option.textContent = station;
+						option.className = route;
+						endStation.appendChild(option);
+					});
+				}
+			}
+		}
+
+
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<!-- 請將html程式碼寫在<body>中 -->
+		<div class="header">
+			<img src="MetroTaipei.jpg" alt="MetroLogo" class="logo">
+			<h1>台北捷運票價計算</h1>
+
+		</div>
+
+		<div class="form-section">
+			<h2>【出發站】</h2>
+			<label for="startRoute">路線</label>
+			<select id="startRoute" class="mySelect">
+				<option value="">--請選擇路線--</option>
+				<option value="松山新店線" class="松山新店線">松山新店線</option>
+				<option value="文湖線" class="文湖線">文湖線</option>
+				<option value="環狀線" class="環狀線">環狀線</option>
+			</select>
+
+			<label for="startStation">起站</label>
+			<select id="startStation" disabled class="mySelect">
+				<option value="">--請選擇起站--</option>
+			</select>
+
+		</div>
+
+		<div class="form-section">
+			<h2>【到達站】</h2>
+			<label for="endRoute">路線</label>
+			<select id="endRoute" class="mySelect">
+				<option value="">--請選擇路線--</option>
+				<option value="松山新店線" class="松山新店線">松山新店線</option>
+				<option value="文湖線" class="文湖線">文湖線</option>
+				<option value="環狀線" class="環狀線">環狀線</option>
+			</select>
+
+			<label for="endStation">迄站</label>
+			<select id="endStation" disabled class="mySelect">
+				<option value="">--請選擇迄站--</option>
+			</select>
+		</div>
+
+		<!-- 按下「送出」按鈕觸發查詢-->
+		<button type="button" id="btnSubmit" class="submit-btn">送出</button>
+
+
+		<div id="resultDisplay" class="resultDisplay">
+			<p>經過站點：</p>
+
+		</div>
+	</div>
+</body>
+
+</html>

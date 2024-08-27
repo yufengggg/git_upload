@@ -2,27 +2,105 @@
 <html lang="en">
 
 <head>
+    <meta charset=utf-8>
     <title>心理測驗看「減肥會成功or失敗」</title>
     <style>
         table,
         th,
         td {
             border: 1px solid #333;
+        }
+
+        .button-style {
+            width: 80px;
             text-align: center;
         }
     </style>
-    <script src="psychometricTestObject.js">
-        window.onload = function(){
+    <script src="psychometricTestObject.js"></script>
+    <script>
+        window.onload = function () {
+            loadQuestion('Q1');
+            document.getElementById('btnAgain').onclick = reset;
+        };
+        function reset() {
+            document.getElementById('btnAgain').hidden = true;
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = '';
+            const rows = document.querySelectorAll('#content tr:not(:first-child)');
+            rows.forEach(row => row.remove());
+            loadQuestion('Q1');
+
+        };
+
+        function loadQuestion(questionID) {
+            const questionData = psychometricTest[questionID];
+            if (!questionData) return;
             const table = document.getElementById('content');
-            const tr = table.insertRow();
-            const Q1data = psychometricTest.Q1;
-            
-            const length = Object.keys(Q1data).length;
-            for(let i = 0; i<length; i++){
-                let td = tr.insertCell(i);
-                
+            const questionRow = document.createElement('tr');
+            questionRow.innerHTML = `
+                <td style="text-align: center;">${questionID}</td>
+                <td>${questionData.question}</td>
+                <td>
+                    ${questionData.ans.map((option, index) =>
+                `<label>
+                            <input type="radio" name="${questionID}_option" value="${questionData.next[index]}"> 
+                            ${option}
+                        </label><br>`
+            ).join('')}
+                </td>
+                <td class="button-style"><button onclick="loadNextQuestion('${questionID}', this)">下一題</button></td>
+                `;
+            table.appendChild(questionRow);
+
+        };
+
+        function loadNextQuestion(currentQuestionID, buttonElement) {
+            // 找到選擇的單選按鈕
+            const selectedOption = document.querySelector(`input[name="${currentQuestionID}_option"]:checked`);
+            // 禁用當前問題的所有單選按鈕
+            disableCurrentQuestionOptions(currentQuestionID);
+            buttonElement.disabled = true;
+            if (selectedOption) {
+                const nextQuestionID = selectedOption.value;
+                if (['A', 'B', 'C', 'D'].includes(nextQuestionID)) {
+                    // 在這裡可以進行相應的處理，例如顯示特定訊息或執行其他操作
+                    const resultText = document.createElement('div');
+                    resultText.id = 'resultText';
+
+                    switch (nextQuestionID) {
+                        case 'A':
+                            resultText.innerHTML = `<h2>A ${result.A.title}</h2><p style="width: 50%;">${result.A.content}</p>`;
+                            break;
+                        case 'B':
+                            resultText.innerHTML = `<h2>B ${result.B.title}</h2><p style="width: 50%;">${result.B.content}</p>`;
+                            break;
+                        case 'C':
+                            resultText.innerHTML = `<h2>C ${result.C.title}</h2><p style="width: 50%;">${result.C.content}</p>`;
+                            break;
+                        case 'D':
+                            resultText.innerHTML = `<h2>D ${result.D.title}</h2><p style="width: 50%;">${result.D.content}</p>`;
+                            break;
+
+                    }
+                    // 將結果插入到網頁中的某個元素，例如插入到 id 為 'resultContainer' 的元素內
+                    document.getElementById('resultContainer').appendChild(resultText);
+                    const btnAgain = document.getElementById('btnAgain');
+                    btnAgain.hidden = false;
+                } else {
+                    loadQuestion(nextQuestionID);
+                }
+            } else {
+                alert('請選擇一個選項！');
             }
+        };
+        function disableCurrentQuestionOptions(currentQuestionID) {
+            // 找到當前問題的所有單選按鈕
+            const options = document.querySelectorAll(`input[name="${currentQuestionID}_option"]`);
+            options.forEach(option => {
+                option.disabled = true; // 將每個選項設置為禁用
+            });
         }
+
     </script>
 </head>
 
@@ -38,11 +116,14 @@
             <th><span>題號</span></th>
             <th><span>題目</span></th>
             <th><span>選項</span></th>
-            <th></th>
+            <th class="button-style"></th>
         </tr>
     </table>
     <br>
-    <div id="resultDiv"></div>
+    <div id="resultContainer">
+    </div>
+    <button type="button" id="btnAgain" hidden>重新測試</button>
+
 
 </body>
 

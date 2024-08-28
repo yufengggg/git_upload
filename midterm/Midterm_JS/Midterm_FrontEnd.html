@@ -20,7 +20,6 @@
 
 			// button觸發查詢與在畫面顯示回傳值
 			document.getElementById('btnSubmit').addEventListener('click', function () {
-				// 請將查詢前要做的事情寫在下方
 				const startRoute = document.getElementById("startRoute").value;
 				const endRoute = document.getElementById("endRoute").value;
 				const startStation = document.getElementById("startStation").value;
@@ -65,64 +64,44 @@
 
 					resultDisplay.innerHTML = '';
 
-					let stationsHtml = '';
+					let stationsHtml = ''; // 經過站點
 
-					// 如果是同一路线，直接使用一个颜色显示所有站点
 					if (response.sameRoute) {
 						stationsHtml += `<span>${response.stations}</span>`;
 					} else {
-						// 如果是不同路线，分别设置不同部分的颜色
 						if (response.preTransferStations) {
 							stationsHtml += `<span>${response.preTransferStations}</span>`;
 						}
-
 						if (response.firstTransferStation) {
-							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							if (stationsHtml) stationsHtml += "、"; 
 							stationsHtml += `<span class="blue">${response.firstTransferStation}</span>`;
 						}
-
 						if (response.midTransferStations) {
-							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							if (stationsHtml) stationsHtml += "、"; 
 							stationsHtml += `<span>${response.midTransferStations}</span>`;
 						}
-
 						if (response.secondTransferStation) {
-							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							if (stationsHtml) stationsHtml += "、";
 							stationsHtml += `<span class="blue">${response.secondTransferStation}</span>`;
 						}
-
 						if (response.postTransferStations) {
-							if (stationsHtml) stationsHtml += "、"; // 如果前面有内容，先加个逗号
+							if (stationsHtml) stationsHtml += "、"; 
 							stationsHtml += `<span>${response.postTransferStations}</span>`;
 						}
 					}
-
-					// 显示合并后的所有站点
+					// 經過站點
 					resultDisplay.innerHTML += `<p>經過站點：${stationsHtml}</p>`;
 
-					// 显示站点数量和车资
+					// 站點數量、車資
 					resultDisplay.innerHTML += `<p>共 ${response.stationCount} 站，車資 ${response.fare} 元</p>`;
 
-					// 显示结果区块
+					// 顯示結果區快
 					resultDisplay.style.display = 'block'
 
 
 				});
 			});
-			// 根据路线返回对应的颜色类
-			function getColorClass(route) {
-				switch (route) {
-					case '松山新店線':
-						return 'green';
-					case '文湖線':
-						return 'brown';
-					case '環狀線':
-						return 'yellow';
-					default:
-						return '';
-				}
-			}
-
+			
 			document.getElementById('startRoute').onchange = function () {
 				updateStations('startRoute');
 			};
@@ -132,6 +111,7 @@
 			};
 
 		}
+
 		// 動態更新下拉選單
 		function updateStations(routeId) {
 			const route = document.getElementById(routeId).value;
@@ -154,10 +134,11 @@
 						const option = document.createElement("option");
 						option.textContent = station;
 						option.value = station;
-						option.className = route;
-
+						option.className = route; // option的class設為路線
 						startStation.appendChild(option);
 					});
+				}else{
+					startStation.disabled = true;
 				}
 			} else if (routeId === 'endRoute') {
 				// 更新終點站選單
@@ -172,6 +153,8 @@
 						option.className = route;
 						endStation.appendChild(option);
 					});
+				}else{
+					endStation.disabled = true;
 				}
 			}
 		}
@@ -182,11 +165,9 @@
 
 <body>
 	<div class="container">
-		<!-- 請將html程式碼寫在<body>中 -->
 		<div class="header">
 			<img src="MetroTaipei.jpg" alt="MetroLogo" class="logo">
 			<h1>台北捷運票價計算</h1>
-
 		</div>
 
 		<div class="form-section">
@@ -198,12 +179,10 @@
 				<option value="文湖線" class="文湖線">文湖線</option>
 				<option value="環狀線" class="環狀線">環狀線</option>
 			</select>
-
 			<label for="startStation">起站</label>
 			<select id="startStation" disabled class="mySelect">
 				<option value="">--請選擇起站--</option>
 			</select>
-
 		</div>
 
 		<div class="form-section">
@@ -215,7 +194,6 @@
 				<option value="文湖線" class="文湖線">文湖線</option>
 				<option value="環狀線" class="環狀線">環狀線</option>
 			</select>
-
 			<label for="endStation">迄站</label>
 			<select id="endStation" disabled class="mySelect">
 				<option value="">--請選擇迄站--</option>
@@ -224,10 +202,7 @@
 
 		<!-- 按下「送出」按鈕觸發查詢-->
 		<button type="button" id="btnSubmit" class="submit-btn">送出</button>
-
-
-		<div id="resultDisplay" class="resultDisplay">
-			<p>經過站點：</p>
+		<div id="resultDisplay" class="resultDisplay" > <!--預設隱藏-->
 
 		</div>
 	</div>

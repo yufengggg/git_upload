@@ -3,11 +3,11 @@ body {
     background-color: #f0f4f8;
     color: #333;
     margin: 0;
-    padding: 20px;
+    padding: 20px; /*內邊距*/
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    justify-content: center; /*水平居中*/
+    align-items: center; /*垂直居中*/
+    height: 100vh; /*占滿整個瀏覽器*/
 }
 
 .container {
@@ -15,8 +15,8 @@ body {
     max-width: 600px;
     padding: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*陰影*/
+    border-radius: 8px; /*圓角*/
     text-align: center;
 }
 
@@ -35,7 +35,7 @@ body {
 
 h1 {
     color: 	#0368B8;
-    font-size: 2em;
+    font-size: 2em; /* em 是相對單位 */
 }
 
 .form-section {
@@ -93,7 +93,7 @@ label {
     background-color: #007BFF;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: pointer; /* 鼠標指針 */
     text-align: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -101,33 +101,28 @@ label {
 
 .submit-btn:hover {
     background-color: #0056b3;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-
-
-
-
-/* 转乘站点样式 */
+/* 轉乘站 */
 .blue {
-    font-weight: bold;      /* 加粗字体 */
-    font-size: 1.2em;       /* 增大字体 */
+    font-weight: bold;
+    font-size: 1.2em;
     color: white;
     background-color: #0368B8;
-    padding: 5px 8px;       /* 添加内边距 */
-    border-radius: 5px;     /* 圆角边框 */
-    border: 2px solid #086bbc; /* 边框颜色 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影 */
-    display: inline-block;  /* 使元素成为块级元素以应用边框和背景 */
+    padding: 5px 8px;       /* 垂直5px 水平8px */
+    border-radius: 5px;     
+    border: 2px solid rgba(8, 107, 188, 0.774); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    display: inline-block;  /* 塊級元素 */
 }
 
 .blue::before {
-    content: "↔ ";          /* 添加换乘图标 */
-    font-size: 1.2em;       /* 图标大小 */
+    content: "↔ "; 
+    font-size: 1.2em; 
     color:white;
 }
 
-/* 结果显示区域 */
+
 .resultDisplay {
     margin-top: 50px;
     padding: 10px;
@@ -138,6 +133,6 @@ label {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    display: none;  /* 初始状态隐藏 */
+    display: none;  
 }
 
